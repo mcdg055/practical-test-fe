@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
 import { LayoutDashboard, UsersRound } from 'lucide-vue-next'
+import Logout from './Logout.vue'
 
 const sidebarItems = [
   {
@@ -18,7 +19,7 @@ const sidebarItems = [
 
 <template>
   <div class="flex-grow max-w-[300px] h-full py-3 ps-3">
-    <div class="bg-white h-full rounded-2xl drop-shadow-sm">
+    <div class="bg-white h-full rounded-2xl drop-shadow-sm flex flex-col">
       <div class="p-5 flex items-center justify-center">
         <Logo />
       </div>
@@ -39,6 +40,8 @@ const sidebarItems = [
           </router-link>
         </div>
       </div>
+
+      <Logout />
     </div>
   </div>
 </template>

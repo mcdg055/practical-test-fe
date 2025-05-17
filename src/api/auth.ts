@@ -8,3 +8,7 @@ export const login = async (data: { email: string; password: string }) => {
     throw error
   }
 }
+
+export const logout = async () => {
+  return await axios.post('/logout')
+}

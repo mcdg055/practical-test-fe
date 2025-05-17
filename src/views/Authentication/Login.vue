@@ -1,4 +1,4 @@
-<script script setup lang="ts">
+<script setup lang="ts">
 import vault from '@/assets/vault.svg'
 import Logo from '@/components/Logo.vue'
 import Input from '@/components/ui/input/Input.vue'
@@ -60,10 +60,23 @@ const submitLogin = () => {
           </div>
           <form class="block mt-5">
             <div class="mb-3">
-              <Input v-model="email" class="p-6" type="email" placeholder="Email" />
+              <Input
+                v-model="email"
+                class="p-6"
+                type="email"
+                name="email"
+                placeholder="Email"
+                autocomplete="email"
+              />
             </div>
             <div class="mb-3">
-              <Input v-model="password" class="p-6" type="password" placeholder="Password" />
+              <Input
+                v-model="password"
+                class="p-6"
+                type="password"
+                placeholder="Password"
+                @keyup.enter="submitLogin"
+              />
             </div>
             <div>
               <Button :disabled="isLoading" type="button" @click="submitLogin" class="w-full p-6">
