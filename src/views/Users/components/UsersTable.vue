@@ -24,6 +24,20 @@ import { Button } from '@/components/ui/button'
 import { valueUpdater } from '@/lib/utils'
 import { useUsersStore } from '@/stores/users'
 import { Plus } from 'lucide-vue-next'
+import { useGlobalModal } from '@/composables/useGlobalModal'
+import AddUserForm from '@/views/Users/components/AddUserForm.vue'
+const { open } = useGlobalModal()
+
+function handleAddUser() {
+  open({
+    title: 'Add user',
+    description: 'Add a new user',
+    component: AddUserForm,
+    onConfirm: () => {
+      console.log('confirmed')
+    },
+  })
+}
 
 const usersStore = useUsersStore()
 
@@ -74,7 +88,7 @@ const table = useVueTable({
         @input="(event: Event) => table.setGlobalFilter(event.target.value)"
         placeholder="Search by name or email..."
       />
-      <Button class="min-w-[100px]"> <Plus class="w-4 h-4" /> Add </Button>
+      <Button @click="handleAddUser" class="min-w-[100px]"> <Plus class="w-4 h-4" /> Add </Button>
     </div>
     <Skeleton v-if="usersStore.loading.users" class="h-[300px]" />
     <div v-else class="border rounded-md">
