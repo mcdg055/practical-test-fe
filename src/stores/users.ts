@@ -9,6 +9,9 @@ export const useUsersStore = defineStore('users', {
       perPage: 10,
       search: '',
     } as tableFilter,
+    loading: {
+      users: false,
+    },
   }),
   actions: {
     setUsers(users: User[]) {
@@ -16,6 +19,9 @@ export const useUsersStore = defineStore('users', {
     },
     setFilters(filter: tableFilter) {
       this.filter = filter
+    },
+    setLoading(loading: boolean) {
+      this.loading.users = loading
     },
   },
   getters: {

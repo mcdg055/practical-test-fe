@@ -7,9 +7,14 @@ import { useUsersStore } from '@/stores/users'
 
 const usersStore = useUsersStore()
 onBeforeMount(() => {
-  fetchUsers(usersStore.filter).then((res) => {
-    usersStore.setUsers(res.data.data)
-  })
+  usersStore.setLoading(true)
+  fetchUsers(usersStore.filter)
+    .then((res) => {
+      usersStore.setUsers(res.data.data)
+    })
+    .finally(() => {
+      usersStore.setLoading(false)
+    })
 })
 </script>
 

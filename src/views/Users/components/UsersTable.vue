@@ -17,6 +17,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import Input from '@/components/ui/input/Input.vue'
+import Skeleton from '@/components/ui/skeleton/Skeleton.vue'
 import { h, ref } from 'vue'
 import { columns as tableColumns } from './columns'
 import { Button } from '@/components/ui/button'
@@ -75,7 +76,8 @@ const table = useVueTable({
       />
       <Button class="min-w-[100px]"> <Plus class="w-4 h-4" /> Add </Button>
     </div>
-    <div class="border rounded-md">
+    <Skeleton v-if="usersStore.loading.users" class="h-[300px]" />
+    <div v-else class="border rounded-md">
       <Table>
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
