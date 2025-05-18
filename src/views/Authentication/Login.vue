@@ -11,12 +11,15 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { Loader2 } from 'lucide-vue-next'
+import { AlertCircle } from 'lucide-vue-next'
+import { Alert, AlertTitle } from '@/components/ui/alert'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
+const isInvalid = ref(false)
 
 const submitLogin = () => {
   isLoading.value = true
@@ -25,17 +28,12 @@ const submitLogin = () => {
     password: password.value,
   })
     .then((res) => {
-      if (res.status === 200) {
-        localStorage.setItem('token', res.data.authorization.token)
-        authStore.setUser(res.data.user)
-        router.push({ name: 'dashboard' })
-      } else {
-        alert('Login failed')
-      }
+      localStorage.setItem('token', res.data.authorization.token)
+      authStore.setUser(res.data.user)
+      router.push({ name: 'dashboard' })
     })
     .catch((error) => {
-      console.error('Login error:', error)
-      alert('An error occurred during login')
+      if (error.status === 401) isInvalid.value = true
     })
     .finally(() => {
       isLoading.value = false
@@ -58,7 +56,11 @@ const submitLogin = () => {
           <div class="text-sm text-gray-500">
             Securely manage and track every IP—anytime, anywhere.
           </div>
-          <form class="block mt-5">
+          <Alert v-if="isInvalid" variant="destructive" class="text-left mt-3">
+            <AlertCircle class="w-4 h-4" />
+            <AlertTitle>Invalid email or password.</AlertTitle>
+          </Alert>
+          <form @submit.prevent="submitLogin" class="block mt-5">
             <div class="mb-3">
               <Input
                 v-model="email"
@@ -70,16 +72,10 @@ const submitLogin = () => {
               />
             </div>
             <div class="mb-3">
-              <Input
-                v-model="password"
-                class="p-6"
-                type="password"
-                placeholder="Password"
-                @keyup.enter="submitLogin"
-              />
+              <Input v-model="password" class="p-6" type="password" placeholder="Password" />
             </div>
             <div>
-              <Button :disabled="isLoading" type="button" @click="submitLogin" class="w-full p-6">
+              <Button :disabled="isLoading" type="submit" class="w-full p-6">
                 <div v-if="isLoading" class="flex items-center justify-center">
                   <Loader2 class="w-4 h-4 mr-2 animate-spin" /> Logging in...
                 </div>
@@ -92,7 +88,7 @@ const submitLogin = () => {
             <div>or login with</div>
             <div class="flex justify-center items-center gap-2">
               <a href="#" class="text-blue-500 hover:text-blue-700">
-                <img class="w-[30px]" :src="google" alt="google" />
+                <img class="w-[30px] me-1" :src="google" alt="google" />
               </a>
               <a href="#" class="text-blue-500 hover:text-blue-700">
                 <img class="w-[40px]" :src="github" alt="github" />

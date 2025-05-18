@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
 import { LayoutDashboard, UsersRound } from 'lucide-vue-next'
-import Logout from './Logout.vue'
+import Logout from '@/components/Sidebar/Logout.vue'
 
 const sidebarItems = [
   {

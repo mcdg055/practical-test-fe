@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, AxiosError } from 'axios'
+import router from '@/router'
 
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VUE_APP_API_BASE_URL || 'http://localhost:8000/api',
@@ -22,7 +23,9 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
-      window.location.href = '/login' // force logout
+      if (router.currentRoute.value.name !== 'login') {
+        router.push({ name: 'login' })
+      }
     }
     return Promise.reject(error)
   },
