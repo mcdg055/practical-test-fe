@@ -7,10 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { useGlobalModal } from '@/composables/useGlobalModal'
 
 const {
@@ -25,8 +22,11 @@ const {
 } = useGlobalModal()
 
 function onConfirm() {
-  console.log(onConfirmAction.value)
+  onConfirmAction.value()
+  close()
+}
 
+function handelOnClose() {
   onConfirmAction.value()
   close()
 }
@@ -48,10 +48,7 @@ function onConfirm() {
           {{ modalTescription }}
         </DialogDescription>
       </DialogHeader>
-      <component :is="modalComponent" v-bind="modalProps" />
-      <DialogFooter>
-        <Button @click="onConfirm" type="button"> Save changes </Button>
-      </DialogFooter>
+      <component :is="modalComponent" v-bind="modalProps" @close="handelOnClose" />
     </DialogContent>
   </Dialog>
 </template>

@@ -1,20 +1,32 @@
 <script setup lang="ts">
 import AppLayout from '@/components/AppLayout.vue'
 import UsersTable from '@/views/Users/components/UsersTable.vue'
-import { fetchUsers } from '@/api/users'
+import { fetchUsers, fetchRoles } from '@/api/users'
 import { onBeforeMount } from 'vue'
 import { useUsersStore } from '@/stores/users'
+import { fetchUsersService } from '@/services/userService'
 
 const usersStore = useUsersStore()
+
 onBeforeMount(() => {
-  usersStore.setLoading(true)
-  fetchUsers(usersStore.filter)
-    .then((res) => {
-      usersStore.setUsers(res.data.data)
+  if (!usersStore.roles.length) {
+    usersStore.setLoading({
+      roles: true,
     })
-    .finally(() => {
-      usersStore.setLoading(false)
-    })
+    fetchRoles()
+      .then((res) => {
+        usersStore.setRoles(res.data)
+      })
+      .finally(() => {
+        usersStore.setLoading({
+          roles: false,
+        })
+      })
+  }
+
+  if (!usersStore.users.length) {
+    fetchUsersService(usersStore.pagination)
+  }
 })
 </script>
 

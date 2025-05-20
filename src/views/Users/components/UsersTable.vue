@@ -4,7 +4,6 @@ import {
   FlexRender,
   getCoreRowModel,
   useVueTable,
-  getPaginationRowModel,
   getSortedRowModel,
   getFilteredRowModel,
 } from '@tanstack/vue-table'
@@ -18,45 +17,39 @@ import {
 } from '@/components/ui/table'
 import Input from '@/components/ui/input/Input.vue'
 import Skeleton from '@/components/ui/skeleton/Skeleton.vue'
-import { h, ref } from 'vue'
+import { ref } from 'vue'
 import { columns as tableColumns } from './columns'
 import { Button } from '@/components/ui/button'
 import { valueUpdater } from '@/lib/utils'
 import { useUsersStore } from '@/stores/users'
-import { Plus } from 'lucide-vue-next'
+import { Loader2, Plus } from 'lucide-vue-next'
 import { useGlobalModal } from '@/composables/useGlobalModal'
 import AddUserForm from '@/views/Users/components/AddUserForm.vue'
+import { storeToRefs } from 'pinia'
+import DataTablePagination from '@/components/ui/table/DataTablePagination.vue'
 const { open } = useGlobalModal()
-
-function handleAddUser() {
-  open({
-    title: 'Add user',
-    description: 'Add a new user',
-    component: AddUserForm,
-    onConfirm: () => {
-      console.log('confirmed')
-    },
-  })
-}
 
 const usersStore = useUsersStore()
 
 const sorting = ref<SortingState>([])
 const globalFilter = ref('')
+const { users } = storeToRefs(usersStore)
+
+const rerender = () => {}
 
 const table = useVueTable({
   get data() {
-    return usersStore.getUsers
+    return users.value
   },
   get columns() {
     return tableColumns
   },
   getCoreRowModel: getCoreRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
   onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, globalFilter),
   getFilteredRowModel: getFilteredRowModel(),
+  manualPagination: true,
   state: {
     get sorting() {
       return sorting.value
@@ -77,6 +70,17 @@ const table = useVueTable({
     })
   },
 })
+
+function handleAddUser() {
+  open({
+    title: 'Add user',
+    description: 'Add a new user',
+    component: AddUserForm,
+    onConfirm: () => {
+      rerender()
+    },
+  })
+}
 </script>
 
 <template>
@@ -88,7 +92,10 @@ const table = useVueTable({
         @input="(event: Event) => table.setGlobalFilter(event.target.value)"
         placeholder="Search by name or email..."
       />
-      <Button @click="handleAddUser" class="min-w-[100px]"> <Plus class="w-4 h-4" /> Add </Button>
+      <Button :disabled="usersStore.loading.roles" @click="handleAddUser" class="min-w-[100px]">
+        <Loader2 v-if="usersStore.loading.roles" class="w-4 h-4 animate-spin" />
+        <Plus v-else class="w-4 h-4" /> Add
+      </Button>
     </div>
     <Skeleton v-if="usersStore.loading.users" class="h-[300px]" />
     <div v-else class="border rounded-md">
@@ -127,22 +134,7 @@ const table = useVueTable({
       </Table>
     </div>
     <div class="flex items-center justify-end py-4 space-x-2">
-      <Button
-        variant="outline"
-        size="sm"
-        :disabled="!table.getCanPreviousPage()"
-        @click="table.previousPage()"
-      >
-        Previous
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        :disabled="!table.getCanNextPage()"
-        @click="table.nextPage()"
-      >
-        Next
-      </Button>
+      <DataTablePagination :table="table" />
     </div>
   </div>
 </template>
