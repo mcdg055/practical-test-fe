@@ -23,12 +23,21 @@ const router = createRouter({
       },
     },
     {
+      path: '/ip-address',
+      name: 'ip-address',
+      component: () => import('../views/IPAddress/Index.vue'),
+      meta: {
+        requiresAuth: true,
+        title: 'Manage IP Addresses',
+      },
+    },
+    {
       path: '/users',
       name: 'users',
       component: () => import('../views/Users/Index.vue'),
       meta: {
         requiresAuth: true,
-        title: 'Users',
+        title: 'Manage Users',
       },
     },
   ],
@@ -49,6 +58,11 @@ async function fetchUser() {
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('token') !== null
 
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: 'login' })
+    return
+  }
+
   if (isAuthenticated) {
     fetchUser()
   }
@@ -61,11 +75,6 @@ router.beforeEach((to, from, next) => {
 
   if (to.name === 'login' && isAuthenticated) {
     next({ name: 'dashboard' })
-    return
-  }
-
-  if (!isAuthenticated && to.name !== 'login') {
-    next({ name: 'login' })
     return
   }
 

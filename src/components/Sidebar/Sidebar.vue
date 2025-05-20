@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
-import { LayoutDashboard, UsersRound } from 'lucide-vue-next'
+import { Globe, LayoutDashboard, UsersRound } from 'lucide-vue-next'
 import Logout from '@/components/Sidebar/Logout.vue'
 
 const sidebarItems = [
@@ -13,6 +13,11 @@ const sidebarItems = [
     name: 'Users',
     path: '/users',
     icon: UsersRound,
+  },
+  {
+    name: 'IP Address',
+    path: '/ip-address',
+    icon: Globe,
   },
 ]
 </script>
