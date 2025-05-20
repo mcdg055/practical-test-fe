@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { type Table } from '@tanstack/vue-table'
 import { ChevronLeftIcon, ChevronRightIcon, ArrowLeftIcon, ArrowRightIcon } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,33 +8,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useUsersStore } from '@/stores/users'
-import { storeToRefs } from 'pinia'
-import { fetchUsersService } from '@/services/userService'
-
-const userStore = useUsersStore()
-
-const pagination = storeToRefs(userStore).getPagination
+import type { TablePagination } from '@/types'
+import type { AcceptableValue } from 'reka-ui'
 
 interface DataTablePaginationProps {
-  table: Table<any>
+  pagination: TablePagination
+  onPageChange: (page: number | null | undefined) => void
+  onPageSizeChange: (pageSize: number) => void
 }
-defineProps<DataTablePaginationProps>()
+const props = defineProps<DataTablePaginationProps>()
 
-const handlePerPageChange = (value: number) => {
-  pagination.value.perPage = value
-  fetchUsersService({
-    page: 1,
-    perPage: value,
-  })
+const handlePageSizeChange = (size: AcceptableValue) => {
+  props.onPageSizeChange(Number(size))
 }
 
-const handlePageChange = (page: number) => {
-  pagination.value.page = page
-  fetchUsersService({
-    page: page,
-    perPage: pagination.value.perPage,
-  })
+const handlePageChange = (page: number | null | undefined) => {
+  props.onPageChange(page)
 }
 </script>
 
@@ -44,7 +32,7 @@ const handlePageChange = (page: number) => {
     <div class="flex items-center space-x-6 lg:space-x-8">
       <div class="flex items-center space-x-2">
         <p class="text-sm font-medium">Rows per page</p>
-        <Select :model-value="`${pagination.perPage}`" @update:model-value="handlePerPageChange">
+        <Select :model-value="`${pagination.perPage}`" @update:model-value="handlePageSizeChange">
           <SelectTrigger class="h-8 w-[70px]">
             <SelectValue :placeholder="`${pagination.perPage}`" />
           </SelectTrigger>

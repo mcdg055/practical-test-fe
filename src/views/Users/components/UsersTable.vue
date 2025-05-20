@@ -27,6 +27,8 @@ import { useGlobalModal } from '@/composables/useGlobalModal'
 import AddUserForm from '@/views/Users/components/AddUserForm.vue'
 import { storeToRefs } from 'pinia'
 import DataTablePagination from '@/components/ui/table/DataTablePagination.vue'
+import { fetchUsersService } from '@/services/userService'
+import { type TablePagination } from '@/types'
 const { open } = useGlobalModal()
 
 const usersStore = useUsersStore()
@@ -134,7 +136,24 @@ function handleAddUser() {
       </Table>
     </div>
     <div class="flex items-center justify-end py-4 space-x-2">
-      <DataTablePagination :table="table" />
+      <DataTablePagination
+        :pagination="usersStore.pagination"
+        :on-page-change="
+          (value) =>
+            fetchUsersService({
+              page: value,
+              perPage: usersStore.pagination.perPage,
+            } as TablePagination)
+        "
+        :on-page-size-change="
+          (value) => {
+            fetchUsersService({
+              page: 1,
+              perPage: value,
+            } as TablePagination)
+          }
+        "
+      />
     </div>
   </div>
 </template>
