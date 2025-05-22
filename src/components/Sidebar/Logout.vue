@@ -11,17 +11,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { logout } from '@/api/auth'
-import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { logoutService } from '@/services/AuthService'
 
-const authStore = useAuthStore()
 const router = useRouter()
 
 const handleLogout = () => {
-  logout().then(() => {
-    authStore.clearUser()
-    localStorage.removeItem('token')
+  logoutService().then(() => {
     router.push({ name: 'login' })
   })
 }

@@ -6,38 +6,26 @@ import Button from '@/components/ui/button/Button.vue'
 import facebook from '@/assets/facebook.svg'
 import google from '@/assets/google.svg'
 import github from '@/assets/github.svg'
-import { login } from '@/api/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { Loader2 } from 'lucide-vue-next'
 import { AlertCircle } from 'lucide-vue-next'
 import { Alert, AlertTitle } from '@/components/ui/alert'
+import { storeToRefs } from 'pinia'
+import { loginService } from '@/services/AuthService'
 
 const authStore = useAuthStore()
-const router = useRouter()
 const email = ref('')
 const password = ref('')
-const isLoading = ref(false)
-const isInvalid = ref(false)
+const router = useRouter()
+
+const { loading, isInvalid } = storeToRefs(authStore)
 
 const submitLogin = () => {
-  isLoading.value = true
-  login({
-    email: email.value,
-    password: password.value,
+  loginService(email.value, password.value).then(() => {
+    router.push({ name: 'dashboard' })
   })
-    .then((res) => {
-      localStorage.setItem('token', res.data.authorization.token)
-      authStore.setUser(res.data.user)
-      router.push({ name: 'dashboard' })
-    })
-    .catch((error) => {
-      if (error.status === 401) isInvalid.value = true
-    })
-    .finally(() => {
-      isLoading.value = false
-    })
 }
 </script>
 
@@ -75,8 +63,8 @@ const submitLogin = () => {
               <Input v-model="password" class="p-6" type="password" placeholder="Password" />
             </div>
             <div>
-              <Button :disabled="isLoading" type="submit" class="w-full p-6">
-                <div v-if="isLoading" class="flex items-center justify-center">
+              <Button :disabled="loading" type="submit" class="w-full p-6">
+                <div v-if="loading" class="flex items-center justify-center">
                   <Loader2 class="w-4 h-4 mr-2 animate-spin" /> Logging in...
                 </div>
                 <span v-else>Login</span>
