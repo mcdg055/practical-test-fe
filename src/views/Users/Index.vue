@@ -4,24 +4,13 @@ import UsersTable from '@/views/Users/components/UsersTable.vue'
 import { fetchUsers, fetchRoles } from '@/api/users'
 import { onBeforeMount } from 'vue'
 import { useUsersStore } from '@/stores/users'
-import { fetchUsersService } from '@/services/userService'
+import { fetchRolesService, fetchUsersService } from '@/services/userService'
 
 const usersStore = useUsersStore()
 
 onBeforeMount(() => {
   if (!usersStore.roles.length) {
-    usersStore.setLoading({
-      roles: true,
-    })
-    fetchRoles()
-      .then((res) => {
-        usersStore.setRoles(res.data)
-      })
-      .finally(() => {
-        usersStore.setLoading({
-          roles: false,
-        })
-      })
+    fetchRolesService()
   }
 
   if (!usersStore.users.length) {

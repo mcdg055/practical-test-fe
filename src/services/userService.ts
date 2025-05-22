@@ -1,4 +1,4 @@
-import { fetchUsers } from './../api/users'
+import { fetchUsers, fetchRoles } from './../api/users'
 import { useUsersStore } from '@/stores/users'
 import type { TablePagination } from '@/types'
 
@@ -29,6 +29,22 @@ export const fetchUsersService = async (pagination: TablePagination) => {
     .finally(() => {
       userStore.setLoading({
         users: false,
+      })
+    })
+}
+
+export const fetchRolesService = async () => {
+  const usersStore = useUsersStore()
+  usersStore.setLoading({
+    roles: true,
+  })
+  return await fetchRoles()
+    .then((res) => {
+      usersStore.setRoles(res.data)
+    })
+    .finally(() => {
+      usersStore.setLoading({
+        roles: false,
       })
     })
 }
