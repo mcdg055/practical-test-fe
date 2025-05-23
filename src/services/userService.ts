@@ -1,4 +1,4 @@
-import { fetchUsers, fetchRoles } from './../api/users'
+import { fetchUsers, fetchRoles, saveUser, updateUser, deleteUser } from './../api/users'
 import { useUsersStore } from '@/stores/users'
 import type { TablePagination } from '@/types'
 
@@ -45,6 +45,63 @@ export const fetchRolesService = async () => {
     .finally(() => {
       usersStore.setLoading({
         roles: false,
+      })
+    })
+}
+
+export const saveUserService = async (data: any) => {
+  const usersStore = useUsersStore()
+
+  usersStore.setLoading({
+    form: true,
+  })
+
+  return await saveUser(data)
+    .then((res) => {
+      usersStore.addUser(res.data.data)
+    })
+    .catch((error) => {})
+    .finally(() => {
+      usersStore.setLoading({
+        form: false,
+      })
+    })
+}
+
+export const updateUserService = async (id: number, data: any) => {
+  const usersStore = useUsersStore()
+
+  usersStore.setLoading({
+    form: true,
+  })
+
+  return await updateUser(id, data)
+    .then((res) => {
+      usersStore.updateUser(res.data.data)
+    })
+    .catch((error) => {})
+    .finally(() => {
+      usersStore.setLoading({
+        form: false,
+      })
+    })
+}
+
+export const deleteUserService = async (id: number) => {
+  const usersStore = useUsersStore()
+
+  usersStore.setLoading({
+    delete: true,
+  })
+
+  return await deleteUser(id)
+    .then((res) => {
+      usersStore.deleteUser(id)
+    })
+    .catch((error) => {})
+    .finally(() => {
+      usersStore.setLoading({
+        delete: false,
       })
     })
 }

@@ -4,6 +4,8 @@ import { defineStore } from 'pinia'
 interface Loading {
   users?: boolean
   roles?: boolean
+  form?: boolean
+  delete?: boolean
 }
 
 export const useUsersStore = defineStore('users', {
@@ -21,6 +23,8 @@ export const useUsersStore = defineStore('users', {
     loading: {
       users: false,
       roles: false,
+      form: false,
+      delete: false,
     },
     roles: [] as Role[],
   }),
@@ -42,6 +46,12 @@ export const useUsersStore = defineStore('users', {
     },
     setPerPage(perPage: number) {
       this.pagination.perPage = perPage
+    },
+    updateUser(user: User) {
+      this.users = this.users.map((u) => (u.id === user.id ? user : u))
+    },
+    deleteUser(userId: number) {
+      this.users = this.users.filter((user) => user.id !== userId)
     },
   },
   getters: {

@@ -1,5 +1,5 @@
 import { axios } from '@/services/axios'
-import type { TablePagination, UserForm } from '@/types'
+import type { TablePagination, User } from '@/types'
 
 export const fetchUsers = async ({
   page = 1,
@@ -25,6 +25,14 @@ export const fetchRoles = async () => {
   return await axios.get('/roles')
 }
 
-export const saveUser = async (data: UserForm) => {
+export const saveUser = async (data: User) => {
   return await axios.post('/users', data)
+}
+
+export const updateUser = async (id: number, data: User) => {
+  return await axios.patch(`/users/${id}`, data)
+}
+
+export const deleteUser = async (id: number) => {
+  return await axios.delete(`/users/${id}`)
 }

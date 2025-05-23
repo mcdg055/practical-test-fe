@@ -17,7 +17,7 @@ const modalProps: Ref<Record<string, any> | null> = ref(null)
 const onConfirmAction: Ref<() => void> = ref(() => {})
 const onCancelAction: Ref<() => void> = ref(() => {})
 const modalTitle: Ref<string> = ref('')
-const modalTescription: Ref<string> = ref('')
+const modalDescription: Ref<string> = ref('')
 
 export function useGlobalModal() {
   function open({ component, props, onConfirm, onCancel, title, description }: ModalOptions) {
@@ -27,13 +27,11 @@ export function useGlobalModal() {
     onConfirmAction.value = onConfirm || (() => {})
     onCancelAction.value = onCancel || (() => {})
     modalTitle.value = title ?? ''
-    modalTescription.value = description ?? ''
+    modalDescription.value = description ?? ''
   }
 
   function close() {
     isVisible.value = false
-    modalComponent.value = null
-    modalProps.value = null
   }
 
   return {
@@ -43,7 +41,7 @@ export function useGlobalModal() {
     onConfirmAction,
     onCancelAction,
     modalTitle,
-    modalTescription,
+    modalDescription,
     open,
     close,
   }

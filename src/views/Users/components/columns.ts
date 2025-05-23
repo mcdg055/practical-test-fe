@@ -5,7 +5,7 @@ import Button from '@/components/ui/button/Button.vue'
 import { ArrowDown } from 'lucide-vue-next'
 import Actions from './Actions.vue'
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<User | Record<string, any>>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) =>
@@ -51,7 +51,7 @@ export const columns: ColumnDef<User>[] = [
     header: () => h('div', { class: '' }, 'Actions'),
     cell: ({ row }) => {
       const id = row.original.id
-      return h('div', { class: '' }, h(Actions, { id }))
+      return h('div', { class: '' }, h(Actions, { user: row.original }))
     },
   },
 ]

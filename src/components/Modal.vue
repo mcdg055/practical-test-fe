@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -17,7 +15,7 @@ const {
   onConfirmAction,
   onCancelAction,
   modalTitle,
-  modalTescription,
+  modalDescription,
   modalComponent,
 } = useGlobalModal()
 
@@ -27,7 +25,7 @@ function onConfirm() {
 }
 
 function handelOnClose() {
-  onConfirmAction.value()
+  onCancelAction.value()
   close()
 }
 </script>
@@ -43,12 +41,15 @@ function handelOnClose() {
   >
     <DialogContent class="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle v-if="modalTitle">{{ modalTitle }}</DialogTitle>
-        <DialogDescription v-if="modalTescription">
-          {{ modalTescription }}
-        </DialogDescription>
+        <DialogTitle v-if="modalTitle" v-html="modalTitle"></DialogTitle>
+        <DialogDescription v-if="modalDescription" v-html="modalDescription"></DialogDescription>
       </DialogHeader>
-      <component :is="modalComponent" v-bind="modalProps" @close="handelOnClose" />
+      <component
+        :is="modalComponent"
+        v-bind="modalProps"
+        @close="handelOnClose"
+        @done="onConfirm"
+      />
     </DialogContent>
   </Dialog>
 </template>

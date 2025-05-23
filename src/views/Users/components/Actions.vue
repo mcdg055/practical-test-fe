@@ -1,20 +1,33 @@
 <script setup lang="ts">
 import Button from '@/components/ui/button/Button.vue'
 import { Pencil, Trash } from 'lucide-vue-next'
+import { useGlobalModal } from '@/composables/useGlobalModal'
+import UserForm from './UserForm.vue'
+import DeleteUser from './DeleteUser.vue'
+import type { User } from '@/types'
 
-const props = defineProps({
-  id: {
-    type: Number,
-    required: true,
-  },
-})
+const { open } = useGlobalModal()
+
+const props = defineProps<{
+  user: User
+}>()
 
 const handleEdit = () => {
-  console.log('edit', props.id)
+  open({
+    title: 'Edit user',
+    description: 'Edit a user',
+    component: UserForm,
+    props: { user: props.user },
+  })
 }
 
 const handleDelete = () => {
-  console.log('delete', props.id)
+  open({
+    title: `Delete user <strong> ${props.user.name} </strong>`,
+    description: 'You are about to delete a user. it is an irreversible action.',
+    component: DeleteUser,
+    props: { id: props.user.id },
+  })
 }
 </script>
 

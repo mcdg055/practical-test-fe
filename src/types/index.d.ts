@@ -1,14 +1,9 @@
 export interface User {
-  id: number
+  id?: number
   name: string
   email: string
-  roles?: Role[]
-}
-
-export interface UserForm {
-  name: string
-  email: string
-  password: string
+  password?: string
+  roles?: string[]
 }
 
 export interface TablePagination {
@@ -19,8 +14,4 @@ export interface TablePagination {
   lastPage?: null | number
   prevPage?: null | number
   firstPage?: null | number
-}
-export interface Role {
-  id: number
-  name: string
 }

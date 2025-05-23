@@ -24,11 +24,11 @@ import { valueUpdater } from '@/lib/utils'
 import { useUsersStore } from '@/stores/users'
 import { Loader2, Plus } from 'lucide-vue-next'
 import { useGlobalModal } from '@/composables/useGlobalModal'
-import AddUserForm from '@/views/Users/components/AddUserForm.vue'
 import { storeToRefs } from 'pinia'
 import DataTablePagination from '@/components/ui/table/DataTablePagination.vue'
 import { fetchUsersService } from '@/services/userService'
 import { type TablePagination } from '@/types'
+import UserForm from './UserForm.vue'
 const { open } = useGlobalModal()
 
 const usersStore = useUsersStore()
@@ -36,8 +36,6 @@ const usersStore = useUsersStore()
 const sorting = ref<SortingState>([])
 const globalFilter = ref('')
 const { users } = storeToRefs(usersStore)
-
-const rerender = () => {}
 
 const table = useVueTable({
   get data() {
@@ -60,9 +58,9 @@ const table = useVueTable({
       return globalFilter.value
     },
   },
-  globalFilterFn: (row, columnId, filterValue) => {
+  globalFilterFn: (row: { original: Record<string, any> }, filterValue: unknown): boolean => {
     const search = String(filterValue).toLowerCase()
-    const allowedFields = ['name', 'email'] // only filter these fields
+    const allowedFields = ['name', 'email']
 
     return allowedFields.some((field) => {
       const value = row.original[field]
@@ -77,10 +75,7 @@ function handleAddUser() {
   open({
     title: 'Add user',
     description: 'Add a new user',
-    component: AddUserForm,
-    onConfirm: () => {
-      rerender()
-    },
+    component: UserForm,
   })
 }
 </script>
@@ -91,7 +86,7 @@ function handleAddUser() {
       <Input
         class="flex-grow max-w-sm"
         v-model="globalFilter"
-        @input="(event: Event) => table.setGlobalFilter(event.target.value)"
+        @input="(event: Event) => table.setGlobalFilter((event.target as HTMLInputElement).value)"
         placeholder="Search by name or email..."
       />
       <Button :disabled="usersStore.loading.roles" @click="handleAddUser" class="min-w-[100px]">
