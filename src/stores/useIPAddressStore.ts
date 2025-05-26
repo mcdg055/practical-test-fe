@@ -4,6 +4,7 @@ import type { IPAddress, TablePagination } from '@/types'
 interface Loading {
   ipAddresses?: boolean
   save?: boolean
+  update?: boolean
 }
 
 export const useIPAddressStore = defineStore('ipAddress', {
@@ -22,6 +23,7 @@ export const useIPAddressStore = defineStore('ipAddress', {
     loading: {
       ipAddresses: false,
       save: false,
+      update: false,
     } as Loading,
   }),
 
@@ -37,6 +39,9 @@ export const useIPAddressStore = defineStore('ipAddress', {
     },
     addIPAddress(ipAddress: IPAddress) {
       this.ipAddresses = [...this.ipAddresses, ipAddress]
+    },
+    updateIPAddress(ipAddress: IPAddress) {
+      this.ipAddresses = this.ipAddresses.map((ip) => (ip.id === ipAddress.id ? ipAddress : ip))
     },
   },
 })

@@ -1,6 +1,6 @@
 import { createMongoAbility, type MongoAbility } from '@casl/ability'
 
-export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete' | 'view'
+export type Actions = 'manage' | 'create' | 'read' | 'update' | 'update own' | 'delete' | 'view'
 
 export type Subjects = 'User' | 'IPAddress' | 'Activity' | 'audit dashboard' | 'all'
 

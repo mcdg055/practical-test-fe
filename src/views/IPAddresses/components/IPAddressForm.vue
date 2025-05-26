@@ -140,7 +140,9 @@ const onSubmit = handleSubmit((values) => {
     </FormField>
 
     <div class="flex justify-end">
-      <Button2 type="submit" :loading="ipAddressStore.loading.save">Save</Button2>
+      <Button2 type="submit" :loading="ipAddressStore.loading.save || ipAddressStore.loading.update"
+        >Save</Button2
+      >
     </div>
   </form>
 </template>
