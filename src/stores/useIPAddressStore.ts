@@ -5,6 +5,7 @@ interface Loading {
   ipAddresses?: boolean
   save?: boolean
   update?: boolean
+  delete?: boolean
 }
 
 export const useIPAddressStore = defineStore('ipAddress', {
@@ -24,6 +25,7 @@ export const useIPAddressStore = defineStore('ipAddress', {
       ipAddresses: false,
       save: false,
       update: false,
+      delete: false,
     } as Loading,
   }),
 
@@ -42,6 +44,9 @@ export const useIPAddressStore = defineStore('ipAddress', {
     },
     updateIPAddress(ipAddress: IPAddress) {
       this.ipAddresses = this.ipAddresses.map((ip) => (ip.id === ipAddress.id ? ipAddress : ip))
+    },
+    deleteIPAdress(ipAddressId: number) {
+      this.ipAddresses = this.ipAddresses.filter((ip) => ip.id !== ipAddressId)
     },
   },
 })

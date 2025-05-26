@@ -7,6 +7,7 @@ import type { IPAddress } from '@/types'
 import { Can } from '@casl/vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 import IPAddressForm from '@/views/IPAddresses/components/IPAddressForm.vue'
+import DeleteIPAddress from '@/views/IPAddresses/components/DeleteIPAddress.vue'
 
 const { open } = useGlobalModal()
 const authStore = useAuthStore()
@@ -24,7 +25,14 @@ const handleEdit = () => {
   })
 }
 
-const handleDelete = () => {}
+const handleDelete = () => {
+  open({
+    title: `Delete IP Address <strong> ${props.ipAddress.ip} </strong>`,
+    description: 'You are about to delete an IP address. it is an irreversible action.',
+    component: DeleteIPAddress,
+    props: { id: props.ipAddress.id },
+  })
+}
 </script>
 
 <template>

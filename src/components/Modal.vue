@@ -39,7 +39,7 @@ function handelOnClose() {
       }
     "
   >
-    <DialogContent class="sm:max-w-[425px]">
+    <DialogContent class="sm:max-w-[500px]">
       <DialogHeader>
         <DialogTitle v-if="modalTitle" v-html="modalTitle"></DialogTitle>
         <DialogDescription v-if="modalDescription" v-html="modalDescription"></DialogDescription>
