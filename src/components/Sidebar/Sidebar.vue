@@ -3,9 +3,10 @@ import Logo from '@/components/Logo.vue'
 import { Globe, LayoutDashboard, UsersRound } from 'lucide-vue-next'
 import Logout from '@/components/Sidebar/Logout.vue'
 import { ROLE_SUPER_ADMIN } from '@/constants'
-import { useAuthStore } from '@/stores/auth'
-import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/useAuthStore'
 import { computed } from 'vue'
+import Skeleton from '../ui/skeleton/Skeleton.vue'
+import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
 
@@ -30,15 +31,12 @@ const sidebarItems = [
   },
 ]
 
-const visibleSidebarItems = computed(() =>
-  sidebarItems.filter((item) => {
-    //defaultly show items if user is super admin
-    if (roles.value.includes(ROLE_SUPER_ADMIN)) return true
-
-    if (!item.roles) return true
-    return item.roles.some((role) => roles.value.includes(role))
-  }),
-)
+const visibleSidebarItems = computed(() => {
+  const userRoles = roles.value || []
+  return sidebarItems.filter((item) => {
+    return !item.roles || item.roles.some((r) => userRoles.includes(r))
+  })
+})
 </script>
 
 <template>
@@ -50,19 +48,27 @@ const visibleSidebarItems = computed(() =>
       <hr class="border-gray-200" />
 
       <div class="p-5">
-        <div v-for="item in visibleSidebarItems" :key="item.name" class="mb-4">
-          <router-link :to="item.path" class="flex items-center gap-3 text-sm">
-            <div
-              class="bg-gray-200 rounded-lg w-[32px] h-[32px] flex items-center justify-center"
-              :class="{
-                'bg-primary text-white': $route.path === item.path,
-              }"
-            >
-              <component :is="item.icon" class="w-[14px] h-[14px]" />
-            </div>
-            {{ item.name }}
-          </router-link>
-        </div>
+        <template v-if="authStore.loading">
+          <Skeleton
+            v-for="i in sidebarItems.length"
+            :key="`skeleton-${i}`"
+            class="h-[32px] w-full mb-3"
+          />
+        </template>
+
+        <template v-else>
+          <div v-for="item in visibleSidebarItems" :key="item.name" class="mb-3">
+            <router-link :to="item.path" class="flex items-center gap-3 text-sm">
+              <div
+                class="bg-gray-200 rounded-lg w-[32px] h-[32px] flex items-center justify-center"
+                :class="{ 'bg-primary text-white': $route.path === item.path }"
+              >
+                <component :is="item.icon" class="w-[14px] h-[14px]" />
+              </div>
+              {{ item.name }}
+            </router-link>
+          </div>
+        </template>
       </div>
 
       <Logout />

@@ -1,5 +1,5 @@
 import { fetchUserProfile, login, logout } from '@/api/auth'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 export const loginService = async (email: string, password: string) => {
   const authStore = useAuthStore()
@@ -11,8 +11,8 @@ export const loginService = async (email: string, password: string) => {
       localStorage.setItem('token', res.data.authorization.token)
       localStorage.setItem('refresh_token', res.data.authorization.refresh_token)
       authStore.setUser(res.data.user)
-      authStore.setRoles(res.data.roles)
-      authStore.setPermissions(res.data.permissions)
+      authStore.setRoles(res.data.user.roles || [])
+      authStore.setPermissions(res.data.user.permissions || [])
     })
     .catch((error) => {
       if (error.status === 401) authStore.setIsInvalid(true)

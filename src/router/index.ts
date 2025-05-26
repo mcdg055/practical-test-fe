@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { fetchUserProfileService } from '@/services/authService'
 import { ROLE_SUPER_ADMIN } from '@/constants'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

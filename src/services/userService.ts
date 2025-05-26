@@ -5,6 +5,8 @@ import type { TablePagination } from '@/types'
 export const fetchUsersService = async (pagination: TablePagination) => {
   const userStore = useUsersStore()
 
+  if (userStore.loading.users) return
+
   userStore.setLoading({
     users: true,
   })
@@ -35,6 +37,9 @@ export const fetchUsersService = async (pagination: TablePagination) => {
 
 export const fetchRolesService = async () => {
   const usersStore = useUsersStore()
+
+  if (usersStore.loading.roles) return
+
   usersStore.setLoading({
     roles: true,
   })

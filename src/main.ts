@@ -1,4 +1,4 @@
-import { useAuthStore } from './stores/auth'
+import { useAuthStore } from './stores/useAuthStore'
 import './assets/main.css'
 
 import { createApp } from 'vue'
@@ -30,9 +30,12 @@ const { roles, permissions } = storeToRefs(authStore)
 watch(
   [roles, permissions],
   ([newRoles, newPermissions]) => {
+    const safeRoles = newRoles || []
+    const safePermissions = newPermissions || []
+
     const newAbility = defineAbilitiesFromRolesAndPermissions(
-      newRoles,
-      newPermissions,
+      safeRoles,
+      safePermissions,
       authStore.user,
     )
     ability.update(newAbility.rules)
