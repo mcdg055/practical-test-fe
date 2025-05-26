@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useRouter } from 'vue-router'
-import { logoutService } from '@/services/AuthService'
+import { logoutService } from '@/services/authService'
 
 const router = useRouter()
 

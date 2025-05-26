@@ -4,6 +4,7 @@ export interface User {
   email: string
   password?: string
   roles?: string[]
+  permissions?: string[]
 }
 
 export interface TablePagination {

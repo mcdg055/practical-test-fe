@@ -26,7 +26,7 @@ export const useUsersStore = defineStore('users', {
       form: false,
       delete: false,
     },
-    roles: [] as String[],
+    roles: [] as string[],
   }),
   actions: {
     setUsers(users: User[]) {
@@ -38,7 +38,7 @@ export const useUsersStore = defineStore('users', {
     setLoading(loading: Loading) {
       this.loading = { ...this.loading, ...loading }
     },
-    setRoles(roles: String[]) {
+    setRoles(roles: string[]) {
       this.roles = roles
     },
     addUser(user: User) {

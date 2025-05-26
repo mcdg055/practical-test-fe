@@ -7,3 +7,7 @@ export const login = async (data: { email: string; password: string }) => {
 export const logout = async () => {
   return await axios.post('/logout')
 }
+
+export const fetchUserProfile = async () => {
+  return await axios.get('/me')
+}

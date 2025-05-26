@@ -13,7 +13,7 @@ import { Loader2 } from 'lucide-vue-next'
 import { AlertCircle } from 'lucide-vue-next'
 import { Alert, AlertTitle } from '@/components/ui/alert'
 import { storeToRefs } from 'pinia'
-import { loginService } from '@/services/AuthService'
+import { loginService } from '@/services/authService'
 
 const authStore = useAuthStore()
 const email = ref('')

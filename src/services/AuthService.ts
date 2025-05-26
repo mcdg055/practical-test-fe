@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/auth'
+import { fetchUserProfile, login, logout } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
 
 export const loginService = async (email: string, password: string) => {
@@ -11,6 +11,8 @@ export const loginService = async (email: string, password: string) => {
       localStorage.setItem('token', res.data.authorization.token)
       localStorage.setItem('refresh_token', res.data.authorization.refresh_token)
       authStore.setUser(res.data.user)
+      authStore.setRoles(res.data.roles)
+      authStore.setPermissions(res.data.permissions)
     })
     .catch((error) => {
       if (error.status === 401) authStore.setIsInvalid(true)
@@ -28,4 +30,24 @@ export const logoutService = async () => {
     localStorage.removeItem('token')
     localStorage.removeItem('refresh_token')
   })
+}
+
+export const fetchUserProfileService = async () => {
+  const authStore = useAuthStore()
+
+  if (authStore.loading) return
+
+  authStore.setLoading(true)
+
+  return await fetchUserProfile()
+    .then((response) => {
+      if (response.status === 200) {
+        authStore.setUser(response.data)
+        authStore.setRoles(response.data.roles || [])
+        authStore.setPermissions(response.data.permissions || [])
+      }
+    })
+    .finally(() => {
+      authStore.setLoading(false)
+    })
 }
