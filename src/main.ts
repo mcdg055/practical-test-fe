@@ -23,14 +23,18 @@ app.use(abilitiesPlugin, ability, {
 
 app.component('Can', Can)
 
-const usersStore = useAuthStore()
+const authStore = useAuthStore()
 
-const { roles, permissions } = storeToRefs(usersStore)
+const { roles, permissions } = storeToRefs(authStore)
 
 watch(
   [roles, permissions],
   ([newRoles, newPermissions]) => {
-    const newAbility = defineAbilitiesFromRolesAndPermissions(newRoles, newPermissions)
+    const newAbility = defineAbilitiesFromRolesAndPermissions(
+      newRoles,
+      newPermissions,
+      authStore.user,
+    )
     ability.update(newAbility.rules)
   },
   { immediate: true },

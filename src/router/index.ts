@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { fetchUserProfileService } from '@/services/authService'
+import { ROLE_SUPER_ADMIN } from '@/constants'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +39,7 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
         title: 'Manage Users',
+        roles: [ROLE_SUPER_ADMIN],
       },
     },
   ],
@@ -45,13 +48,29 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('token') !== null
 
+  if (isAuthenticated) {
+    fetchUserProfileService()
+  }
+
   if (to.meta.requiresAuth && !isAuthenticated) {
     next({ name: 'login' })
     return
   }
 
-  if (isAuthenticated) {
-    fetchUserProfileService()
+  if (to.meta.roles && isAuthenticated) {
+    const authStore = useAuthStore()
+
+    const userRoles = authStore.roles || []
+
+    if (userRoles.includes(ROLE_SUPER_ADMIN)) {
+      next()
+      return
+    }
+
+    if (!authStore.roles.some((role) => to.meta.roles.includes(role))) {
+      next({ name: 'dashboard' })
+      return
+    }
   }
 
   const { title } = to.meta
