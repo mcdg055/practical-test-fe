@@ -6,7 +6,6 @@ import { useGlobalModal } from '@/composables/useGlobalModal'
 import { storeToRefs } from 'pinia'
 
 import { fetchUsersService } from '@/services/userService'
-import { type TablePagination } from '@/types'
 import UserForm from './UserForm.vue'
 import DataTable from '@/components/reusable/DataTable.vue'
 import Button2 from '@/components/ui/button/Button2.vue'
@@ -23,16 +22,6 @@ function handleAddUser() {
     description: 'Add a new user',
     component: UserForm,
   })
-}
-
-function handleSearch(keyword: string) {
-  if (keyword.length < 3 && keyword) return
-
-  fetchUsersService({
-    page: 1,
-    perPage: usersStore.pagination.perPage,
-    search: keyword,
-  } as TablePagination)
 }
 </script>
 

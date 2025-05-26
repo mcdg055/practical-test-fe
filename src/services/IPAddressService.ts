@@ -1,5 +1,6 @@
-import type { TablePagination } from '@/types'
-import { fetchIpAddresses } from '@/api/ipAddress'
+import { updateUserService } from './userService'
+import type { IPAddress, TablePagination } from '@/types'
+import { fetchIpAddresses, saveIPAddress } from '@/api/ipAddress'
 import { useIPAddressStore } from '@/stores/useIPAddressStore'
 import { storeToRefs } from 'pinia'
 
@@ -37,3 +38,22 @@ export const fetchIpAddressesService = async (pagination: TablePagination) => {
       })
     })
 }
+
+export const saveIpAddressService = async (ipAddress: IPAddress) => {
+  const ipAddressStore = useIPAddressStore()
+
+  ipAddressStore.setLoading({
+    save: true,
+  })
+  return await saveIPAddress(ipAddress)
+    .then((res) => {
+      ipAddressStore.addIPAddress(res.data)
+    })
+    .finally(() => {
+      ipAddressStore.setLoading({
+        save: false,
+      })
+    })
+}
+
+export const updateIpAddressService = async (id: number, ipAddress: IPAddress) => {}
