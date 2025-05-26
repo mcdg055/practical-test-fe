@@ -6,7 +6,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { abilitiesPlugin } from '@casl/vue'
+import { abilitiesPlugin, Can } from '@casl/vue'
 import { ability } from './casl/ability'
 import { defineAbilitiesFromRolesAndPermissions } from './casl/defineAbilities'
 import { storeToRefs } from 'pinia'
@@ -20,6 +20,8 @@ app.use(router)
 app.use(abilitiesPlugin, ability, {
   useGlobalProperties: true,
 })
+
+app.component('Can', Can)
 
 const usersStore = useAuthStore()
 
