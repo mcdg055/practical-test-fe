@@ -1,12 +1,17 @@
 import type { TablePagination } from '@/types'
 import { fetchIpAddresses } from '@/api/ipAddress'
 import { useIPAddressStore } from '@/stores/useIPAddressStore'
+import { storeToRefs } from 'pinia'
 
 export const fetchIpAddressesService = async (pagination: TablePagination) => {
   const ipAddressStore = useIPAddressStore()
 
+  const { loading } = storeToRefs(ipAddressStore)
+
+  if (loading.value.ipAddresses) return
+
   ipAddressStore.setLoading({
-    ipAdresses: true,
+    ipAddresses: true,
   })
 
   return await fetchIpAddresses(pagination)
@@ -28,7 +33,7 @@ export const fetchIpAddressesService = async (pagination: TablePagination) => {
     })
     .finally(() => {
       ipAddressStore.setLoading({
-        ipAdresses: false,
+        ipAddresses: false,
       })
     })
 }

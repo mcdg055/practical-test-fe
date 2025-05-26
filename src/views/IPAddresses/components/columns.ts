@@ -61,7 +61,7 @@ export const columns: ColumnDef<IPAddress | Record<string, any>>[] = [
     header: () => h('div', { class: '' }, 'Actions'),
     cell: ({ row }: { row: Row }) => {
       const id = row.original.id
-      return h('div', { class: '' }, h(Actions, { user: row.original }))
+      return h('div', { class: '' }, h(Actions, { ipAddress: row.original }))
     },
   },
 ]

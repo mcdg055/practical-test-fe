@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { IPAddress, TablePagination } from '@/types'
 
 interface Loading {
-  ipAdresses?: boolean
+  ipAddresses?: boolean
 }
 
 export const useIPAddressStore = defineStore('ipAddress', {
@@ -20,7 +20,7 @@ export const useIPAddressStore = defineStore('ipAddress', {
     } as TablePagination,
     loading: {
       ipAddresses: false,
-    },
+    } as Loading,
   }),
 
   actions: {

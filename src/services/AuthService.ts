@@ -35,7 +35,7 @@ export const logoutService = async () => {
 export const fetchUserProfileService = async () => {
   const authStore = useAuthStore()
 
-  if (authStore.loading) return
+  if (authStore.loading || authStore.user) return
 
   authStore.setLoading(true)
 
