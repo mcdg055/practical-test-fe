@@ -45,6 +45,7 @@ function handelOnClose() {
         <DialogDescription v-if="modalDescription" v-html="modalDescription"></DialogDescription>
       </DialogHeader>
       <component
+        v-if="modalComponent"
         :is="modalComponent"
         v-bind="modalProps"
         @close="handelOnClose"

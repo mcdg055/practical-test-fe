@@ -2,7 +2,7 @@ import { h } from 'vue'
 import type { User } from '@/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import Button from '@/components/ui/button/Button.vue'
-import { ArrowDown } from 'lucide-vue-next'
+import { ArrowUpDown } from 'lucide-vue-next'
 import Actions from './Actions.vue'
 
 export const columns: ColumnDef<User | Record<string, any>>[] = [
@@ -15,7 +15,7 @@ export const columns: ColumnDef<User | Record<string, any>>[] = [
           variant: 'ghost',
           onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
         },
-        () => ['Name', h(ArrowDown, { class: 'ml-2 h-4 w-4' })],
+        () => ['Name', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })],
       ),
     cell: ({ row }) => {
       return h('div', { class: 'font-medium' }, row.getValue('name'))
@@ -30,7 +30,7 @@ export const columns: ColumnDef<User | Record<string, any>>[] = [
           variant: 'ghost',
           onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
         },
-        () => ['Email', h(ArrowDown, { class: 'ml-2 h-4 w-4' })],
+        () => ['Email', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })],
       ),
     cell: ({ row }) => {
       return h('div', { class: 'font-medium' }, row.getValue('email'))

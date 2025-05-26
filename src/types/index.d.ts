@@ -14,4 +14,5 @@ export interface TablePagination {
   lastPage?: null | number
   prevPage?: null | number
   firstPage?: null | number
+  search?: string
 }

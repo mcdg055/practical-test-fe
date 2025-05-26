@@ -13,7 +13,7 @@ import type { AcceptableValue } from 'reka-ui'
 
 interface DataTablePaginationProps {
   pagination: TablePagination
-  onPageChange: (page: number | null | undefined) => void
+  onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
 }
 const props = defineProps<DataTablePaginationProps>()
@@ -22,7 +22,7 @@ const handlePageSizeChange = (size: AcceptableValue) => {
   props.onPageSizeChange(Number(size))
 }
 
-const handlePageChange = (page: number | null | undefined) => {
+const handlePageChange = (page: number) => {
   props.onPageChange(page)
 }
 </script>

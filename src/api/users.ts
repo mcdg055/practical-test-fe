@@ -8,6 +8,7 @@ export const fetchUsers = async ({
   lastPage = null,
   prevPage = null,
   firstPage = null,
+  search = '',
 }: TablePagination) => {
   return await axios.get('/users', {
     params: {
@@ -17,6 +18,7 @@ export const fetchUsers = async ({
       lastPage,
       prevPage,
       firstPage,
+      search,
     },
   })
 }

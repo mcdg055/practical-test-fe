@@ -58,7 +58,7 @@ export const saveUserService = async (data: any) => {
 
   return await saveUser(data)
     .then((res) => {
-      usersStore.addUser(res.data.data)
+      usersStore.addUser(res.data)
     })
     .catch((error) => {})
     .finally(() => {
@@ -77,7 +77,7 @@ export const updateUserService = async (id: number, data: any) => {
 
   return await updateUser(id, data)
     .then((res) => {
-      usersStore.updateUser(res.data.data)
+      usersStore.updateUser(res.data)
     })
     .catch((error) => {})
     .finally(() => {
