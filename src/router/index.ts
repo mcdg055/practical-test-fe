@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: '/ip-address',
       name: 'ip-address',
-      component: () => import('../views/IPAddress/Index.vue'),
+      component: () => import('../views/IPAddresses/Index.vue'),
       meta: {
         requiresAuth: true,
         title: 'Manage IP Addresses',

@@ -1,4 +1,4 @@
-import type { User, Role, TablePagination } from '@/types'
+import type { User, TablePagination } from '@/types'
 import { defineStore } from 'pinia'
 
 interface Loading {
@@ -26,7 +26,7 @@ export const useUsersStore = defineStore('users', {
       form: false,
       delete: false,
     },
-    roles: [] as Role[],
+    roles: [] as String[],
   }),
   actions: {
     setUsers(users: User[]) {
@@ -38,7 +38,7 @@ export const useUsersStore = defineStore('users', {
     setLoading(loading: Loading) {
       this.loading = { ...this.loading, ...loading }
     },
-    setRoles(roles: Role[]) {
+    setRoles(roles: String[]) {
       this.roles = roles
     },
     addUser(user: User) {

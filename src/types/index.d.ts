@@ -16,3 +16,14 @@ export interface TablePagination {
   firstPage?: null | number
   search?: string
 }
+
+export interface IPAddress {
+  id?: number
+  ip: string
+  type: string
+  label: string
+  comment?: string
+  createdAt?: string
+  updatedAt?: string
+  user?: User
+}
