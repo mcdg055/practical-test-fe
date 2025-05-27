@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import Button from '@/components/ui/button/Button.vue'
 import { ArrowUpDown } from 'lucide-vue-next'
 import Actions from './Actions.vue'
+import Comments from './Comments.vue'
 
 interface Row {
   getValue: (key: string) => IPAddress | undefined
@@ -51,11 +52,28 @@ export const columns: ColumnDef<IPAddress | Record<string, any>>[] = [
   },
   {
     accessorKey: 'user',
-    header: () => h('div', { class: '' }, 'user'),
+    header: ({ column }) =>
+      h(
+        Button,
+        {
+          variant: 'ghost',
+          onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+        },
+        () => ['User', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })],
+      ),
     cell: ({ row }: { row: Row }) => {
       return h('div', { class: 'font-medium' }, row.original.user.name)
     },
   },
+
+  {
+    accessorKey: 'comments',
+    header: () => h('div', { class: '' }, 'Comments'),
+    cell: ({ row }: { row: Row }) => {
+      return h('div', { class: '' }, h(Comments, { comment: row.original.comment }))
+    },
+  },
+
   {
     id: 'actions',
     header: () => h('div', { class: '' }, 'Actions'),

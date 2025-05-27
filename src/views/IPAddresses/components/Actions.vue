@@ -13,7 +13,7 @@ const { open } = useGlobalModal()
 const authStore = useAuthStore()
 
 const props = defineProps<{
-  ipAddress: IPAddress
+  ipAddress: IPAddress | Record<string, any>
 }>()
 
 const handleEdit = () => {
