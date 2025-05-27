@@ -98,11 +98,15 @@ const handleDebounceSearch = useDebounceFn(
       </div>
     </div>
     <Skeleton v-if="loading" class="h-[300px]" />
-    <div v-else class="border rounded-md">
+    <div v-else class="border border-gray-200 rounded-2xl">
       <Table>
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-            <TableHead v-for="header in headerGroup.headers" :key="header.id">
+            <TableHead
+              class="border-b border-gray-200 dark:border-gray-700"
+              v-for="header in headerGroup.headers"
+              :key="header.id"
+            >
               <FlexRender
                 v-if="!header.isPlaceholder"
                 :render="header.column.columnDef.header"
@@ -114,6 +118,7 @@ const handleDebounceSearch = useDebounceFn(
         <TableBody>
           <template v-if="table.getRowModel().rows?.length">
             <TableRow
+              class="border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
               v-for="row in table.getRowModel().rows"
               :key="row.id"
               :data-state="row.getIsSelected() ? 'selected' : undefined"

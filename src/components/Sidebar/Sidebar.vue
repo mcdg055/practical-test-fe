@@ -58,7 +58,7 @@ const visibleSidebarItems = computed(() => {
 
         <template v-else>
           <div v-for="item in visibleSidebarItems" :key="item.name" class="mb-3">
-            <router-link :to="item.path" class="flex items-center gap-3 text-sm">
+            <router-link :to="item.path" class="flex items-center gap-3 text-sm font-semibold">
               <div
                 class="bg-gray-200 rounded-lg w-[32px] h-[32px] flex items-center justify-center"
                 :class="{ 'bg-primary text-white': $route.path === item.path }"
