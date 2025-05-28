@@ -1,10 +1,28 @@
 <script setup lang="ts">
-import Sidebar from '@/components/Sidebar/Sidebar.vue'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import Sidebar from '@/components/Sidebar/Sidebar.vue'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useAuthStore } from '@/stores/useAuthStore'
 
+const authStore = useAuthStore()
 const router = useRouter()
 
 const pageTitle = router.currentRoute.value.meta.title
+
+const intialsUrl = computed(() => {
+  return `https://ui-avatars.com/api/?name=${authStore.user?.name}&background=random&bold=true&format=svg`
+})
+
+const avatarFallback = computed(() => {
+  return authStore.user?.name
+    ? authStore.user.name
+        .split(' ')
+        .filter((part) => part.length > 0)
+        .map((part) => part[0].toUpperCase())
+        .join('')
+    : '?'
+})
 </script>
 
 <template>
@@ -18,6 +36,19 @@ const pageTitle = router.currentRoute.value.meta.title
           </div>
           <div>
             <h1 class="text-md font-bold">{{ pageTitle }}</h1>
+          </div>
+        </div>
+
+        <div v-if="authStore.user" class="flex items-center gap-4 me-6">
+          <Avatar class="w-10 h-10">
+            <AvatarImage :src="intialsUrl" :alt="authStore.user.name || 'Avatar'" />
+            <AvatarFallback class="text-sm font-semibold">
+              {{ avatarFallback }}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <span class="text-sm font-semibold">{{ authStore.user.name }}</span>
+            <div class="text-xs text-gray-500">{{ authStore.user.email }}</div>
           </div>
         </div>
       </nav>
