@@ -28,3 +28,15 @@ export interface IPAddress {
   updatedAt?: string
   user?: User
 }
+
+export interface ActivityLog {
+  id: number
+  description: string
+  log_name: string
+  event: string
+  causer: Record<string, any> | null
+  properties: Record<string, any> | null
+  subject_type: string
+  subject_id: string
+  created_at: string
+}

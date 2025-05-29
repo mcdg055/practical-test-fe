@@ -1,2 +1,16 @@
 export const ROLE_SUPER_ADMIN = 'Super Admin'
 export const ROLE_USER = 'User'
+
+export const LOG_ACTION_CREATE = 'CREATE'
+export const LOG_ACTION_UPDATE = 'UPDATE'
+export const LOG_ACTION_DELETE = 'DELETE'
+export const LOG_ACTION_LOGIN = 'LOGIN'
+export const LOG_ACTION_LOGOUT = 'LOGOUT'
+
+export const LOG_ACTIONS = {
+  CREATE: LOG_ACTION_CREATE,
+  UPDATE: LOG_ACTION_UPDATE,
+  DELETE: LOG_ACTION_DELETE,
+  LOGIN: LOG_ACTION_LOGIN,
+  LOGOUT: LOG_ACTION_LOGOUT,
+}

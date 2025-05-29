@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
-import { Globe, LayoutDashboard, UsersRound } from 'lucide-vue-next'
+import { Activity, Globe, LayoutDashboard, UsersRound } from 'lucide-vue-next'
 import Logout from '@/components/Sidebar/Logout.vue'
 import { ROLE_SUPER_ADMIN } from '@/constants'
 import { useAuthStore } from '@/stores/useAuthStore'
@@ -28,6 +28,12 @@ const sidebarItems = [
     name: 'IP Address',
     path: '/ip-address',
     icon: Globe,
+  },
+  {
+    name: 'Activity Logs',
+    path: '/activity-logs',
+    icon: Activity,
+    roles: [ROLE_SUPER_ADMIN],
   },
 ]
 

@@ -42,6 +42,16 @@ const router = createRouter({
         roles: [ROLE_SUPER_ADMIN],
       },
     },
+    {
+      path: '/activity-logs',
+      name: 'activity-logs',
+      component: () => import('../views/ActivityLog/Index.vue'),
+      meta: {
+        requiresAuth: true,
+        title: 'Activity Logs',
+        roles: [ROLE_SUPER_ADMIN],
+      },
+    },
   ],
 })
 
