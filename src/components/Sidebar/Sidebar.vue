@@ -14,15 +14,15 @@ const { roles } = storeToRefs(authStore)
 
 const sidebarItems = [
   {
+    name: 'IP Address',
+    path: '/',
+    icon: Globe,
+  },
+  {
     name: 'Users',
     path: '/users',
     icon: UsersRound,
     roles: [ROLE_SUPER_ADMIN],
-  },
-  {
-    name: 'IP Address',
-    path: '/',
-    icon: Globe,
   },
   {
     name: 'Activity Logs',
