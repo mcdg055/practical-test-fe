@@ -1,64 +1,40 @@
-# practical-test-fe
+# IP Vault API
 
-This template should help get you started developing with Vue 3 in Vite.
+IP Address Management System that performs CRUD. The following are the supported features of this project:
 
-## Recommended IDE Setup
+1. **User Management System** -> this includes a CRUD operation on user as well as assigning their designated roles
+2. **IP Address Management System** -> This lets the user (Admin and regular user) to add an ip address (IPv4/IPv6) with label, and an optional description.
+3. **Audit Logs** -> A module that is only visible to super admin users which records all the activities done in users and ip addresses module. The logs are undeletable. regardless of the user's role.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Prerequisite
 
-## Type Support for `.vue` Imports in TS
+- Install WSL2
+- Install Docker Desktop
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Installation
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```
+docker composet up --build
 ```
 
-### Compile and Hot-Reload for Development
+## Accessing the App
 
-```sh
-npm run dev
-```
+URL: `http://localhost:5173`
 
-### Type-Check, Compile and Minify for Production
+Use the credentials below:
 
-```sh
-npm run build
-```
+## Credentials
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Admin User:
 
-```sh
-npm run test:unit
-```
+email: `superadmin@domain.com`
+password: `password`
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+Regular User
 
-```sh
-# Install browsers for the first run
-npx playwright install
+email: `user@domain.com`
+password: `password`
 
-# When testing on CI, must build the project first
-npm run build
+## NOTE
 
-# Runs the end-to-end tests
-npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Make sure you had already setup the [practical-test-be](https://github.com/mcdg055/practical-test-be) for API in your local machine before accessing UI.
