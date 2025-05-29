@@ -24,7 +24,7 @@ const { loading, isInvalid } = storeToRefs(authStore)
 
 const submitLogin = () => {
   loginService(email.value, password.value).then(() => {
-    router.push({ name: 'dashboard' })
+    router.push({ name: 'ip-address' })
   })
 }
 </script>

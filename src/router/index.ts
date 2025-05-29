@@ -16,15 +16,6 @@ const router = createRouter({
     },
     {
       path: '/',
-      name: 'dashboard',
-      component: () => import('../views/Dashboard/Index.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Dashboard',
-      },
-    },
-    {
-      path: '/ip-address',
       name: 'ip-address',
       component: () => import('../views/IPAddresses/Index.vue'),
       meta: {
@@ -78,7 +69,7 @@ router.beforeEach((to, from, next) => {
     }
 
     if (!authStore.roles.some((role) => to.meta.roles.includes(role))) {
-      next({ name: 'dashboard' })
+      next({ name: 'ip-address' })
       return
     }
   }
@@ -90,7 +81,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.name === 'login' && isAuthenticated) {
-    next({ name: 'dashboard' })
+    next({ name: 'ip-address' })
     return
   }
 

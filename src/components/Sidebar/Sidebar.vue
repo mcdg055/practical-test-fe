@@ -14,11 +14,6 @@ const { roles } = storeToRefs(authStore)
 
 const sidebarItems = [
   {
-    name: 'Dashboard',
-    path: '/',
-    icon: LayoutDashboard,
-  },
-  {
     name: 'Users',
     path: '/users',
     icon: UsersRound,
@@ -26,7 +21,7 @@ const sidebarItems = [
   },
   {
     name: 'IP Address',
-    path: '/ip-address',
+    path: '/',
     icon: Globe,
   },
   {
