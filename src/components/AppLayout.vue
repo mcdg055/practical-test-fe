@@ -30,32 +30,34 @@ const avatarFallback = computed(() => {
 <template>
   <div class="flex items-stretch h-screen">
     <Sidebar />
-    <main class="h-full flex-grow px-4 py-3 ps-8">
-      <nav class="p-4 flex items-center justify-between bg-white rounded-xl drop-shadow-xl">
-        <div>
-          <div class="breadcrumb text-sm">
-            <span class="text-gray-500">Pages</span> / <span>{{ pageTitle }}</span>
-          </div>
+    <main class="h-screen flex-grow">
+      <div class="overflow-y-auto h-full px-4 py-3 ps-8">
+        <nav class="p-4 flex items-center justify-between bg-white rounded-xl drop-shadow-xl">
           <div>
-            <h1 class="text-md font-bold">{{ pageTitle }}</h1>
+            <div class="breadcrumb text-sm">
+              <span class="text-gray-500">Pages</span> / <span>{{ pageTitle }}</span>
+            </div>
+            <div>
+              <h1 class="text-md font-bold">{{ pageTitle }}</h1>
+            </div>
           </div>
-        </div>
 
-        <div v-if="authStore.user" class="flex items-center gap-4 me-6">
-          <Avatar class="w-10 h-10">
-            <AvatarImage :src="intialsUrl" :alt="authStore.user.name || 'Avatar'" />
-            <AvatarFallback class="text-sm font-semibold">
-              {{ avatarFallback }}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <span class="text-sm font-semibold">{{ authStore.user.name }}</span>
-            <div class="text-xs text-gray-500">{{ authStore.user.email }}</div>
+          <div v-if="authStore.user" class="flex items-center gap-4 me-6">
+            <Avatar class="w-10 h-10">
+              <AvatarImage :src="intialsUrl" :alt="authStore.user.name || 'Avatar'" />
+              <AvatarFallback class="text-sm font-semibold">
+                {{ avatarFallback }}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <span class="text-sm font-semibold">{{ authStore.user.name }}</span>
+              <div class="text-xs text-gray-500">{{ authStore.user.email }}</div>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      <slot />
+        <slot />
+      </div>
     </main>
   </div>
 </template>
