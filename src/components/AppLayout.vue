@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import Sidebar from '@/components/Sidebar/Sidebar.vue'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useAuthStore } from '@/stores/useAuthStore'
@@ -8,7 +8,9 @@ import { useAuthStore } from '@/stores/useAuthStore'
 const authStore = useAuthStore()
 const router = useRouter()
 
-const pageTitle = router.currentRoute.value.meta.title
+const pageTitle = computed(() => router.currentRoute.value.meta.title as string)
+
+document.title = pageTitle.value
 
 const intialsUrl = computed(() => {
   return `https://ui-avatars.com/api/?name=${authStore.user?.name}&background=random&bold=true&format=svg`
